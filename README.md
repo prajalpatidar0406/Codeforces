@@ -17,7 +17,7 @@
 | Metric | Value |
 |--------|-------|
 | ✅ Total Solved | **1** |
-| 🏷️ Unique Topics | **3** |
+| 🏷️ Unique Topics | **4** |
 | 🟢 Easiest Rating | **-** |
 | 🔴 Hardest Rating | **-** |
 
@@ -31,7 +31,7 @@
 
 ## 🏷️ Topics
 
-![graphs](https://img.shields.io/badge/graphs-1-informational?style=flat-square) ![greedy](https://img.shields.io/badge/greedy-1-informational?style=flat-square) ![number theory](https://img.shields.io/badge/number%20theory-1-informational?style=flat-square)
+![chinese remainder theorem](https://img.shields.io/badge/chinese%20remainder%20theorem-1-informational?style=flat-square) ![interactive](https://img.shields.io/badge/interactive-1-informational?style=flat-square) ![math](https://img.shields.io/badge/math-1-informational?style=flat-square) ![probabilities](https://img.shields.io/badge/probabilities-1-informational?style=flat-square)
 
 ---
 
@@ -41,7 +41,7 @@
 
 | # | Problem | Tags | Date |
 |---|---------|------|------|
-| 1 | [2225G - Simple Problem](https://codeforces.com/problemset/problem/2225/G) | `graphs`, `greedy`, `number theory` | 2026-04-22 |
+| 1 | [2225A - A Number Between Two Others](https://codeforces.com/problemset/problem/2225/A) | `chinese remainder theorem`, `interactive`, `math`, `probabilities` | 2026-04-23 |
 
 
 ---
