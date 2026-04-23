@@ -18,13 +18,16 @@ HOW TO WRITE YOUR SOLUTION FILES
 3. Write your solution below it.
 4. Run:  python3 update_readme.py
 
-That's it. The script fetches problem name, rating, and tags
-automatically from the Codeforces API.
+The script will:
+- Fetch problem name, rating, and tags from the Codeforces API.
+- Auto-rename your file to {contestId}{index}_{Problem_Title}.py
+- Update README.md with clickable links to each solution file.
 """
 
 import os
 import re
 import json
+import subprocess
 import urllib.request
 from collections import defaultdict
 from datetime import datetime
@@ -116,8 +119,62 @@ def get_file_date(filepath):
     return datetime.fromtimestamp(mtime).strftime("%Y-%m-%d")
 
 
+def make_filename(contest_id, index, problem_name):
+    """Build a consistent filename: {contestId}{index}_{Problem_Title}.py
+
+    Rules:
+    - Replace spaces and hyphens with underscores
+    - Remove any characters that aren't alphanumeric or underscores
+    - Collapse multiple underscores into one
+    - Strip leading/trailing underscores from the title part
+    """
+    title = problem_name.replace(" ", "_").replace("-", "_")
+    title = re.sub(r"[^A-Za-z0-9_]", "", title)
+    title = re.sub(r"_+", "_", title).strip("_")
+    return f"{contest_id}{index}_{title}.py"
+
+
+def rename_solution_file(old_path, new_name):
+    """Rename a solution file and its .cph companion, then git-add both."""
+    old_dir = os.path.dirname(old_path)
+    old_name = os.path.basename(old_path)
+    new_path = os.path.join(old_dir, new_name)
+
+    if old_path == new_path:
+        return new_path  # already correct
+
+    os.rename(old_path, new_path)
+    print(f"   📝 Renamed: {old_name} → {new_name}")
+
+    # Rename matching .cph file (format: .{filename}_{hash}.prob)
+    cph_dir = os.path.join(old_dir, ".cph")
+    if os.path.isdir(cph_dir):
+        old_prefix = f".{old_name}_"
+        new_prefix = f".{new_name}_"
+        for cph_file in os.listdir(cph_dir):
+            if cph_file.startswith(old_prefix):
+                old_cph = os.path.join(cph_dir, cph_file)
+                new_cph = os.path.join(cph_dir, cph_file.replace(old_prefix, new_prefix, 1))
+                os.rename(old_cph, new_cph)
+                print(f"   📝 Renamed .cph: {cph_file} → {os.path.basename(new_cph)}")
+
+    # Stage the rename in git
+    try:
+        subprocess.run(
+            ["git", "add", "-A", old_dir],
+            cwd=REPO_ROOT, capture_output=True, check=True,
+        )
+    except Exception:
+        pass  # non-fatal
+
+    return new_path
+
+
 def scan_solutions(problems_db):
-    """Scan all .py files in problems/ folder, extract link, look up metadata."""
+    """Scan all .py files in problems/ folder, extract link, look up metadata.
+
+    Also renames files to the canonical {contestId}{index}_{Title}.py format.
+    """
     solutions = []
 
     if not os.path.isdir(PROBLEMS_DIR):
@@ -139,8 +196,18 @@ def scan_solutions(problems_db):
             key = f"{contest_id}_{index}"
             info = problems_db.get(key, {})
 
+        problem_name = info.get("name", "")
+
+        # ── Auto-rename file to canonical format ──
+        if problem_name and contest_id and index:
+            canonical = make_filename(contest_id, index, problem_name)
+            if fname != canonical:
+                filepath = rename_solution_file(filepath, canonical)
+                fname = canonical
+
         solutions.append({
             "filename": fname,
+            "filepath": f"problems/{fname}",
             "link": link,
             "name": info.get("name", fname.replace(".py", "").replace("_", " ")),
             "rating": info.get("rating", "-"),
@@ -232,15 +299,16 @@ def build_readme(solutions):
         color = RANK_COLORS.get(rank, "555555")
 
         section = f'### <img src="https://img.shields.io/badge/{b}-{rank}-{color}?style=flat-square"/> &nbsp; Rating {b} — {len(group)} solved\n\n'
-        section += "| # | Problem | Tags | Date |\n"
-        section += "|---|---------|------|------|\n"
+        section += "| # | Problem | CF | Tags | Date |\n"
+        section += "|---|---------|:--:|------|------|\n"
 
         for s in group:
             global_idx += 1
             prob_id = f'{s["contest_id"]}{s["index"]}'
             display = f"{prob_id} - {s['name']}"
+            cf_link = f'[🔗]({s["link"]})'
             tags_str = ", ".join(f"`{t}`" for t in s["tags"]) if s["tags"] else "-"
-            section += f"| {global_idx} | [{display}]({s['link']}) | {tags_str} | {s['date']} |\n"
+            section += f"| {global_idx} | [{display}]({s['filepath']}) | {cf_link} | {tags_str} | {s['date']} |\n"
 
         rating_sections.append(section)
 
