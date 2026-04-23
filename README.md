@@ -4,7 +4,7 @@
 
 [![Codeforces](https://img.shields.io/badge/Codeforces-Profile-1F8ACB?style=for-the-badge&logo=codeforces&logoColor=white)](https://codeforces.com/profile/prajal_patidar)
 &nbsp;&nbsp;
-![Total](https://img.shields.io/badge/Solved-1-success?style=for-the-badge)
+![Total](https://img.shields.io/badge/Solved-2-success?style=for-the-badge)
 &nbsp;&nbsp;
 ![Python](https://img.shields.io/badge/Language-Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 
@@ -16,22 +16,23 @@
 
 | Metric | Value |
 |--------|-------|
-| ✅ Total Solved | **1** |
-| 🏷️ Unique Topics | **4** |
-| 🟢 Easiest Rating | **-** |
-| 🔴 Hardest Rating | **-** |
+| ✅ Total Solved | **2** |
+| 🏷️ Unique Topics | **6** |
+| 🟢 Easiest Rating | **1000** |
+| 🔴 Hardest Rating | **1000** |
 
 **Difficulty Distribution:**
 
 ```
      0  ████████████████████    1  (?)
+  1000  ████████████████████    1  (Pupil)
 ```
 
 ---
 
 ## 🏷️ Topics
 
-![chinese remainder theorem](https://img.shields.io/badge/chinese%20remainder%20theorem-1-informational?style=flat-square) ![interactive](https://img.shields.io/badge/interactive-1-informational?style=flat-square) ![math](https://img.shields.io/badge/math-1-informational?style=flat-square) ![probabilities](https://img.shields.io/badge/probabilities-1-informational?style=flat-square)
+![chinese remainder theorem](https://img.shields.io/badge/chinese%20remainder%20theorem-1-informational?style=flat-square) ![interactive](https://img.shields.io/badge/interactive-1-informational?style=flat-square) ![math](https://img.shields.io/badge/math-1-informational?style=flat-square) ![probabilities](https://img.shields.io/badge/probabilities-1-informational?style=flat-square) ![implementation](https://img.shields.io/badge/implementation-1-informational?style=flat-square) ![strings](https://img.shields.io/badge/strings-1-informational?style=flat-square)
 
 ---
 
@@ -42,6 +43,12 @@
 | # | Problem | Tags | Date |
 |---|---------|------|------|
 | 1 | [2225A - A Number Between Two Others](https://codeforces.com/problemset/problem/2225/A) | `chinese remainder theorem`, `interactive`, `math`, `probabilities` | 2026-04-23 |
+
+### <img src="https://img.shields.io/badge/1000-Pupil-008000?style=flat-square"/> &nbsp; Rating 1000 — 1 solved
+
+| # | Problem | Tags | Date |
+|---|---------|------|------|
+| 2 | [118A - String Task](https://codeforces.com/problemset/problem/118/A) | `implementation`, `strings` | 2026-04-23 |
 
 
 ---
