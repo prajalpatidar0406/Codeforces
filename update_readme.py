@@ -329,10 +329,15 @@ def build_readme(solutions):
 
     for b in sorted_buckets:
         group = rating_groups[b]
-        rank = RANK_LABELS.get(b, "Unknown")
-        color = RANK_COLORS.get(rank, "555555")
-
-        section = f'### <img src="https://img.shields.io/badge/{b}-{rank}-{color}?style=flat-square"/> &nbsp; Rating {b} — {len(group)} solved\n\n'
+        if b == 0:
+            rank = "Unrated"
+            color = "555555"
+            badge_label = "Unrated"
+            section = f'### <img src="https://img.shields.io/badge/Unrated-{color}?style=flat-square"/> &nbsp; Unrated — {len(group)} solved\n\n'
+        else:
+            rank = RANK_LABELS.get(b, "Unknown")
+            color = RANK_COLORS.get(rank, "555555")
+            section = f'### <img src="https://img.shields.io/badge/{b}-{rank}-{color}?style=flat-square"/> &nbsp; Rating {b} — {len(group)} solved\n\n'
         section += "| # | Problem | CF | Tags | Date |\n"
         section += "|---|---------|:--:|------|------|\n"
 
@@ -380,6 +385,8 @@ def build_readme(solutions):
 
 [![Codeforces](https://img.shields.io/badge/Codeforces-Profile-1F8ACB?style=for-the-badge&logo=codeforces&logoColor=white)](https://codeforces.com/profile/prajal_patidar)
 &nbsp;&nbsp;
+[![CF Rating](https://cp-logo.vercel.app/codeforces/prajal_patidar)](https://codeforces.com/profile/prajal_patidar)
+&nbsp;&nbsp;
 ![Total](https://img.shields.io/badge/Solved-{total_solved}-success?style=for-the-badge)
 &nbsp;&nbsp;
 ![Unsolved](https://img.shields.io/badge/Unsolved-{total_unsolved}-red?style=for-the-badge)
@@ -387,6 +394,20 @@ def build_readme(solutions):
 ![Python](https://img.shields.io/badge/Language-Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 
 </div>
+
+<p align="center">
+  <i>A collection of my <a href="https://codeforces.com">Codeforces</a> solutions with automated tracking, problem metadata, and a self-updating README.</i>
+</p>
+
+---
+
+## ✨ Features
+
+- 🔄 **Auto-updating README** — a pre-commit hook regenerates this file on every `git commit`
+- 📛 **Auto file naming** — solution files are renamed to `{{contestId}}{{index}}_{{Title}}.py` automatically
+- 📊 **Problem metadata** — rating, tags, and difficulty fetched live from the Codeforces API
+- 🔗 **Clickable links** — click any problem name to view the solution; click 🔗 to open it on Codeforces
+- ❌ **Unsolved tracking** — mark problems as `#unsolved` with a `#reason` to track what needs revisiting
 
 ---
 
@@ -408,7 +429,7 @@ def build_readme(solutions):
 
 ---
 
-## 🏷️ Topics
+## 🏷️ Topics Covered
 
 {topic_badges_str}
 
@@ -416,23 +437,21 @@ def build_readme(solutions):
 
 ## 📊 Solutions
 
+> Click on any **Problem** name to view the solution code. Click **🔗** to open the problem on Codeforces.
+
 {chr(10).join(rating_sections)}
 {unsolved_section}
 ---
 
-## 🚀 Quick Start
+## 🚀 How to Use This Repository
 
-**Add a solution** — create any `.py` file inside `problems/`, paste the problem link on line 1:
+<details>
+<summary><b>📥 Adding a New Solution</b></summary>
 
-```
-Codeforces/
-├── problems/          ← put your solutions here
-│   ├── 4A_Watermelon.py
-│   └── 71A_Way_Too_Long_Words.py
-├── template.py        ← starter template
-├── update_readme.py   ← run this to update README
-└── README.md          ← auto-generated
-```
+1. Create any `.py` file inside `problems/`
+2. Paste the Codeforces problem link as the **first line** with a `#` prefix
+3. Write your solution below
+4. Commit — the README updates automatically!
 
 ```python
 # https://codeforces.com/problemset/problem/4/A
@@ -444,13 +463,60 @@ def solve():
 solve()
 ```
 
-**Update README** — just run:
+> **Note:** The file will be auto-renamed to `4A_Watermelon.py` on commit.
+
+</details>
+
+<details>
+<summary><b>❌ Marking a Problem as Unsolved</b></summary>
+
+Add `#unsolved` and optionally `#reason` after the problem link:
+
+```python
+# https://codeforces.com/problemset/problem/1873/E
+#unsolved
+#reason: "due to memory limit"
+
+# your attempt below...
+```
+
+Unsolved problems appear in a separate section with the reason displayed.
+
+</details>
+
+<details>
+<summary><b>📁 Repository Structure</b></summary>
+
+```
+Codeforces/
+├── problems/              ← all solution files (auto-renamed)
+│   ├── 4A_Watermelon.py
+│   ├── 69A_Young_Physicist.py
+│   └── ...
+├── template.py            ← starter template for new problems
+├── update_readme.py       ← README generator script
+├── .gitignore
+└── README.md              ← this file (auto-generated)
+```
+
+</details>
+
+<details>
+<summary><b>🔧 Manual README Update</b></summary>
 
 ```bash
 python3 update_readme.py
 ```
 
-Problem name, rating, and tags are fetched automatically from the Codeforces API. ✨
+Problem name, rating, and tags are fetched from the [Codeforces API](https://codeforces.com/apiHelp) and cached for 24 hours.
+
+</details>
+
+---
+
+<div align="center">
+  <sub>Built with ❤️ and automated with Python · Solutions in Python 3</sub>
+</div>
 """
 
     with open(os.path.join(REPO_ROOT, "README.md"), "w") as f:
