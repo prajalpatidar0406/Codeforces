@@ -18,10 +18,19 @@ HOW TO WRITE YOUR SOLUTION FILES
 3. Write your solution below it.
 4. Run:  python3 update_readme.py
 
+MARKING A PROBLEM AS UNSOLVED
+-----------------------------
+Add these comment lines right after the problem link:
+
+   # https://codeforces.com/problemset/problem/4/A
+   #unsolved
+   #reason: "due to memory limit"
+
 The script will:
 - Fetch problem name, rating, and tags from the Codeforces API.
 - Auto-rename your file to {contestId}{index}_{Problem_Title}.py
 - Update README.md with clickable links to each solution file.
+- Show unsolved problems in a separate section with the reason.
 """
 
 import os
@@ -88,14 +97,20 @@ def fetch_all_problems():
 
 
 def parse_link_from_file(filepath):
-    """Read the first line of a .py file and extract the Codeforces problem link."""
-    with open(filepath, "r") as f:
-        first_line = f.readline().strip()
+    """Read the first few lines of a .py file and extract:
+    - Codeforces problem link (line 1)
+    - unsolved flag (line 2, optional): #unsolved
+    - reason (line 3, optional): #reason: "due to memory limit"
 
-    # Match:  # https://codeforces.com/...
-    match = re.match(r"^#\s*(https?://codeforces\.com/\S+)", first_line)
+    Returns (link, contest_id, index, unsolved, reason).
+    """
+    with open(filepath, "r") as f:
+        lines = [f.readline().strip() for _ in range(5)]
+
+    # Line 1: problem link
+    match = re.match(r"^#\s*(https?://codeforces\.com/\S+)", lines[0])
     if not match:
-        return None, None, None
+        return None, None, None, False, None
 
     link = match.group(1)
 
@@ -106,11 +121,22 @@ def parse_link_from_file(filepath):
     #   /gym/123/problem/A
     m = re.search(r"/(?:problemset/problem|contest|gym)/(\d+)/(?:problem/)?([A-Za-z]\d?)", link)
     if not m:
-        return link, None, None
+        return link, None, None, False, None
 
     contest_id = m.group(1)
     index = m.group(2).upper()
-    return link, contest_id, index
+
+    # Scan remaining lines for #unsolved and #reason tags
+    unsolved = False
+    reason = None
+    for line in lines[1:]:
+        if re.match(r"^#\s*unsolved\s*$", line, re.IGNORECASE):
+            unsolved = True
+        reason_match = re.match(r'^#\s*reason:\s*["\'](.+?)["\']\s*$', line, re.IGNORECASE)
+        if reason_match:
+            reason = reason_match.group(1)
+
+    return link, contest_id, index, unsolved, reason
 
 
 def get_file_date(filepath):
@@ -185,7 +211,7 @@ def scan_solutions(problems_db):
             continue
 
         filepath = os.path.join(PROBLEMS_DIR, fname)
-        link, contest_id, index = parse_link_from_file(filepath)
+        link, contest_id, index, unsolved, reason = parse_link_from_file(filepath)
 
         if not link:
             continue
@@ -215,6 +241,8 @@ def scan_solutions(problems_db):
             "contest_id": contest_id or "-",
             "index": index or "-",
             "date": get_file_date(filepath),
+            "unsolved": unsolved,
+            "reason": reason,
         })
 
     return solutions
@@ -223,11 +251,15 @@ def scan_solutions(problems_db):
 def build_readme(solutions):
     """Rebuild README.md."""
 
-    # ── Collect stats ──
+    # ── Split solved / unsolved ──
+    solved = [s for s in solutions if not s["unsolved"]]
+    unsolved = [s for s in solutions if s["unsolved"]]
+
+    # ── Collect stats (from solved only) ──
     topic_counts = defaultdict(int)
     rating_groups = defaultdict(list)
 
-    for s in solutions:
+    for s in solved:
         for tag in s["tags"]:
             topic_counts[tag] += 1
         # Group by rating bucket
@@ -273,14 +305,16 @@ def build_readme(solutions):
     }
 
     # ── Stats overview ──
-    total = len(solutions)
+    total_solved = len(solved)
+    total_unsolved = len(unsolved)
+    total_all = len(solutions)
     unique_tags = len(topic_counts)
-    easiest = min((int(s["rating"]) for s in solutions if str(s["rating"]).isdigit()), default="-")
-    hardest = max((int(s["rating"]) for s in solutions if str(s["rating"]).isdigit()), default="-")
+    easiest = min((int(s["rating"]) for s in solved if str(s["rating"]).isdigit()), default="-")
+    hardest = max((int(s["rating"]) for s in solved if str(s["rating"]).isdigit()), default="-")
 
     # ── Build difficulty distribution bar ──
     dist_lines = []
-    if sorted_buckets and total > 0:
+    if sorted_buckets and total_solved > 0:
         max_count = max(len(rating_groups[b]) for b in sorted_buckets)
         for b in sorted_buckets:
             count = len(rating_groups[b])
@@ -315,6 +349,22 @@ def build_readme(solutions):
     if not rating_sections:
         rating_sections.append("*No solutions yet — start solving!*\n")
 
+    # ── Build unsolved section ──
+    unsolved_section = ""
+    if unsolved:
+        unsolved.sort(key=lambda s: s["date"], reverse=True)
+        unsolved_section = "## ❌ Unsolved Problems\n\n"
+        unsolved_section += "| # | Problem | CF | Reason | Tags | Date |\n"
+        unsolved_section += "|---|---------|:--:|--------|------|------|\n"
+        for idx, s in enumerate(unsolved, 1):
+            prob_id = f'{s["contest_id"]}{s["index"]}'
+            display = f"{prob_id} - {s['name']}"
+            cf_link = f'[🔗]({s["link"]})'
+            reason_str = s["reason"] if s["reason"] else "-"
+            tags_str = ", ".join(f"`{t}`" for t in s["tags"]) if s["tags"] else "-"
+            unsolved_section += f"| {idx} | [{display}]({s['filepath']}) | {cf_link} | {reason_str} | {tags_str} | {s['date']} |\n"
+        unsolved_section += "\n"
+
     # ── Topic badges ──
     topic_badges = []
     for tag, count in sorted(topic_counts.items(), key=lambda x: -x[1]):
@@ -330,7 +380,9 @@ def build_readme(solutions):
 
 [![Codeforces](https://img.shields.io/badge/Codeforces-Profile-1F8ACB?style=for-the-badge&logo=codeforces&logoColor=white)](https://codeforces.com/profile/prajal_patidar)
 &nbsp;&nbsp;
-![Total](https://img.shields.io/badge/Solved-{total}-success?style=for-the-badge)
+![Total](https://img.shields.io/badge/Solved-{total_solved}-success?style=for-the-badge)
+&nbsp;&nbsp;
+![Unsolved](https://img.shields.io/badge/Unsolved-{total_unsolved}-red?style=for-the-badge)
 &nbsp;&nbsp;
 ![Python](https://img.shields.io/badge/Language-Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 
@@ -342,7 +394,8 @@ def build_readme(solutions):
 
 | Metric | Value |
 |--------|-------|
-| ✅ Total Solved | **{total}** |
+| ✅ Total Solved | **{total_solved}** |
+| ❌ Unsolved | **{total_unsolved}** |
 | 🏷️ Unique Topics | **{unique_tags}** |
 | 🟢 Easiest Rating | **{easiest}** |
 | 🔴 Hardest Rating | **{hardest}** |
@@ -364,7 +417,7 @@ def build_readme(solutions):
 ## 📊 Solutions
 
 {chr(10).join(rating_sections)}
-
+{unsolved_section}
 ---
 
 ## 🚀 Quick Start
@@ -411,17 +464,19 @@ def main():
 
     print("📂 Scanning solution files...")
     solutions = scan_solutions(problems_db)
-    print(f"   Found {len(solutions)} solution(s).\n")
+    solved = [s for s in solutions if not s["unsolved"]]
+    unsolved = [s for s in solutions if s["unsolved"]]
+    print(f"   Found {len(solved)} solved, {len(unsolved)} unsolved.\n")
 
     print("📝 Updating README.md...")
     build_readme(solutions)
 
-    print(f"\n✅ Done! README.md updated with {len(solutions)} solution(s).")
+    print(f"\n✅ Done! README.md updated with {len(solved)} solved, {len(unsolved)} unsolved.")
 
     if solutions:
         print(f"\n📊 Summary:")
         tags = defaultdict(int)
-        for s in solutions:
+        for s in solved:
             for t in s["tags"]:
                 tags[t] += 1
         top = sorted(tags.items(), key=lambda x: -x[1])[:5]
