@@ -8,7 +8,7 @@
 &nbsp;&nbsp;
 ![Total](https://img.shields.io/badge/Solved-5-success?style=for-the-badge)
 &nbsp;&nbsp;
-![Unsolved](https://img.shields.io/badge/Unsolved-1-red?style=for-the-badge)
+![Unsolved](https://img.shields.io/badge/Unsolved-2-red?style=for-the-badge)
 &nbsp;&nbsp;
 ![Python](https://img.shields.io/badge/Language-Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 
@@ -35,7 +35,7 @@
 | Metric | Value |
 |--------|-------|
 | ✅ Total Solved | **5** |
-| ❌ Unsolved | **1** |
+| ❌ Unsolved | **2** |
 | 🏷️ Unique Topics | **5** |
 | 🟢 Easiest Rating | **1000** |
 | 🔴 Hardest Rating | **1100** |
@@ -84,7 +84,8 @@
 
 | # | Problem | CF | Reason | Tags | Date |
 |---|---------|:--:|--------|------|------|
-| 1 | [1873E - Building an Aquarium](problems/1873E_Building_an_Aquarium.py) | [🔗](https://codeforces.com/problemset/problem/1873/E) | due to memory limit | `binary search`, `sortings` | 2026-04-25 |
+| 1 | [706B - Interesting drink](problems/706B_Interesting_drink.py) | [🔗](https://codeforces.com/problemset/problem/706/B) | Time limit exceed on test 5 | `binary search`, `dp`, `implementation` | 2026-04-26 |
+| 2 | [1873E - Building an Aquarium](problems/1873E_Building_an_Aquarium.py) | [🔗](https://codeforces.com/problemset/problem/1873/E) | due to memory limit | `binary search`, `sortings` | 2026-04-25 |
 
 
 ---
