@@ -6,9 +6,9 @@
 &nbsp;&nbsp;
 [![CF Rating](https://cp-logo.vercel.app/codeforces/prajal_patidar)](https://codeforces.com/profile/prajal_patidar)
 &nbsp;&nbsp;
-![Total](https://img.shields.io/badge/Solved-5-success?style=for-the-badge)
+![Total](https://img.shields.io/badge/Solved-6-success?style=for-the-badge)
 &nbsp;&nbsp;
-![Unsolved](https://img.shields.io/badge/Unsolved-2-red?style=for-the-badge)
+![Unsolved](https://img.shields.io/badge/Unsolved-1-red?style=for-the-badge)
 &nbsp;&nbsp;
 ![Python](https://img.shields.io/badge/Language-Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 
@@ -34,9 +34,9 @@
 
 | Metric | Value |
 |--------|-------|
-| ✅ Total Solved | **5** |
-| ❌ Unsolved | **2** |
-| 🏷️ Unique Topics | **5** |
+| ✅ Total Solved | **6** |
+| ❌ Unsolved | **1** |
+| 🏷️ Unique Topics | **7** |
 | 🟢 Easiest Rating | **1000** |
 | 🔴 Hardest Rating | **1100** |
 
@@ -45,14 +45,14 @@
 ```
      0  ██████░░░░░░░░░░░░░░    1  (?)
   1000  ████████████████████    3  (Pupil)
-  1100  ██████░░░░░░░░░░░░░░    1  (Pupil)
+  1100  █████████████░░░░░░░    2  (Pupil)
 ```
 
 ---
 
 ## 🏷️ Topics Covered
 
-![implementation](https://img.shields.io/badge/implementation-3-informational?style=flat-square) ![greedy](https://img.shields.io/badge/greedy-3-informational?style=flat-square) ![strings](https://img.shields.io/badge/strings-2-informational?style=flat-square) ![math](https://img.shields.io/badge/math-2-informational?style=flat-square) ![*special](https://img.shields.io/badge/*special-1-informational?style=flat-square)
+![implementation](https://img.shields.io/badge/implementation-4-informational?style=flat-square) ![greedy](https://img.shields.io/badge/greedy-3-informational?style=flat-square) ![strings](https://img.shields.io/badge/strings-2-informational?style=flat-square) ![math](https://img.shields.io/badge/math-2-informational?style=flat-square) ![*special](https://img.shields.io/badge/*special-1-informational?style=flat-square) ![binary search](https://img.shields.io/badge/binary%20search-1-informational?style=flat-square) ![dp](https://img.shields.io/badge/dp-1-informational?style=flat-square)
 
 ---
 
@@ -74,18 +74,18 @@
 | 3 | [69A - Young Physicist](problems/69A_Young_Physicist.py) | [🔗](https://codeforces.com/problemset/problem/69/A) | `implementation`, `math` | 2026-04-24 |
 | 4 | [118A - String Task](problems/118A_String_Task.py) | [🔗](https://codeforces.com/problemset/problem/118/A) | `implementation`, `strings` | 2026-04-23 |
 
-### <img src="https://img.shields.io/badge/1100-Pupil-008000?style=flat-square"/> &nbsp; Rating 1100 — 1 solved
+### <img src="https://img.shields.io/badge/1100-Pupil-008000?style=flat-square"/> &nbsp; Rating 1100 — 2 solved
 
 | # | Problem | CF | Tags | Date |
 |---|---------|:--:|------|------|
-| 5 | [158B - Taxi](problems/158B_Taxi.py) | [🔗](https://codeforces.com/problemset/problem/158/B) | `*special`, `greedy`, `implementation` | 2026-04-26 |
+| 5 | [706B - Interesting drink](problems/706B_Interesting_drink.py) | [🔗](https://codeforces.com/problemset/problem/706/B) | `binary search`, `dp`, `implementation` | 2026-04-27 |
+| 6 | [158B - Taxi](problems/158B_Taxi.py) | [🔗](https://codeforces.com/problemset/problem/158/B) | `*special`, `greedy`, `implementation` | 2026-04-26 |
 
 ## ❌ Unsolved Problems
 
 | # | Problem | CF | Reason | Tags | Date |
 |---|---------|:--:|--------|------|------|
-| 1 | [706B - Interesting drink](problems/706B_Interesting_drink.py) | [🔗](https://codeforces.com/problemset/problem/706/B) | Time limit exceed on test 5 | `binary search`, `dp`, `implementation` | 2026-04-26 |
-| 2 | [1873E - Building an Aquarium](problems/1873E_Building_an_Aquarium.py) | [🔗](https://codeforces.com/problemset/problem/1873/E) | due to memory limit | `binary search`, `sortings` | 2026-04-25 |
+| 1 | [1873E - Building an Aquarium](problems/1873E_Building_an_Aquarium.py) | [🔗](https://codeforces.com/problemset/problem/1873/E) | due to memory limit | `binary search`, `sortings` | 2026-04-25 |
 
 
 ---
