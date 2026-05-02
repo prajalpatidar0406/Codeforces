@@ -491,11 +491,14 @@ Unsolved problems appear in a separate section with the reason displayed.
 ```
 Codeforces/
 ├── problems/              ← all solution files (auto-renamed)
-│   ├── 4A_Watermelon.py
 │   ├── 69A_Young_Physicist.py
+│   ├── 118A_String_Task.py
 │   └── ...
+├── stats_template.html    ← stats dashboard template (Chart.js)
+├── stats.html             ← auto-generated stats dashboard
 ├── template.py            ← starter template for new problems
-├── update_readme.py       ← README generator script
+├── update_readme.py       ← README + stats generator script
+├── .cf_cache.json         ← Codeforces API cache (auto-generated, gitignored)
 ├── .gitignore
 └── README.md              ← this file (auto-generated)
 ```
@@ -503,12 +506,13 @@ Codeforces/
 </details>
 
 <details>
-<summary><b>🔧 Manual README Update</b></summary>
+<summary><b>🔧 Manual README + Stats Update</b></summary>
 
 ```bash
 python3 update_readme.py
 ```
 
+This regenerates both `README.md` and `stats.html` with latest data.
 Problem name, rating, and tags are fetched from the [Codeforces API](https://codeforces.com/apiHelp) and cached for 24 hours.
 
 </details>
