@@ -408,6 +408,7 @@ def build_readme(solutions):
 - 📊 **Problem metadata** — rating, tags, and difficulty fetched live from the Codeforces API
 - 🔗 **Clickable links** — click any problem name to view the solution; click 🔗 to open it on Codeforces
 - ❌ **Unsolved tracking** — mark problems as `#unsolved` with a `#reason` to track what needs revisiting
+- 📈 **[Interactive Stats Dashboard](stats.html)** — visual graphs: daily/weekly/monthly progress, rating distribution, topic radar, and activity heatmap
 
 ---
 
@@ -523,6 +524,58 @@ Problem name, rating, and tags are fetched from the [Codeforces API](https://cod
         f.write(readme)
 
 
+def build_stats_page(solutions):
+    """Generate stats.html from template with embedded solution data for interactive charts."""
+    template_path = os.path.join(REPO_ROOT, "stats_template.html")
+    output_path = os.path.join(REPO_ROOT, "stats.html")
+    if not os.path.exists(template_path):
+        print("   ⚠️  stats_template.html not found, skipping stats page.")
+        return
+
+    solved = [s for s in solutions if not s["unsolved"]]
+    unsolved = [s for s in solutions if s["unsolved"]]
+
+    stats_data = {
+        "solved": [
+            {
+                "name": s["name"],
+                "rating": s["rating"],
+                "tags": s["tags"],
+                "date": s["date"],
+                "contest_id": s["contest_id"],
+                "index": s["index"],
+            }
+            for s in solved
+        ],
+        "unsolved": [
+            {
+                "name": s["name"],
+                "rating": s["rating"],
+                "tags": s["tags"],
+                "date": s["date"],
+                "reason": s["reason"],
+            }
+            for s in unsolved
+        ],
+    }
+
+    data_script = (
+        "<script>window.STATS_DATA = "
+        + json.dumps(stats_data, separators=(",", ":"))
+        + ";</script>"
+    )
+
+    with open(template_path, "r") as f:
+        html = f.read()
+
+    html = html.replace("<!--STATS_DATA_PLACEHOLDER-->", data_script)
+
+    with open(output_path, "w") as f:
+        f.write(html)
+
+    print(f"   ✅ stats.html updated with {len(solved)} solved, {len(unsolved)} unsolved.")
+
+
 def main():
     print("🔍 Fetching Codeforces problem data...")
     problems_db = fetch_all_problems()
@@ -537,7 +590,10 @@ def main():
     print("📝 Updating README.md...")
     build_readme(solutions)
 
-    print(f"\n✅ Done! README.md updated with {len(solved)} solved, {len(unsolved)} unsolved.")
+    print("📊 Generating stats dashboard...")
+    build_stats_page(solutions)
+
+    print(f"\n✅ Done! README.md + stats.html updated with {len(solved)} solved, {len(unsolved)} unsolved.")
 
     if solutions:
         print(f"\n📊 Summary:")

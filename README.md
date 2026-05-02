@@ -27,6 +27,7 @@
 - 📊 **Problem metadata** — rating, tags, and difficulty fetched live from the Codeforces API
 - 🔗 **Clickable links** — click any problem name to view the solution; click 🔗 to open it on Codeforces
 - ❌ **Unsolved tracking** — mark problems as `#unsolved` with a `#reason` to track what needs revisiting
+- 📈 **[Interactive Stats Dashboard](stats.html)** — visual graphs: daily/weekly/monthly progress, rating distribution, topic radar, and activity heatmap
 
 ---
 
@@ -78,9 +79,9 @@
 
 | # | Problem | CF | Tags | Date |
 |---|---------|:--:|------|------|
-| 5 | [270A - Fancy Fence](problems/270A_Fancy_Fence.py) | [🔗](https://codeforces.com/problemset/problem/270/A) | `geometry`, `implementation`, `math` | 2026-05-02 |
-| 6 | [368B - Sereja and Suffixes](problems/368B_Sereja_and_Suffixes.py) | [🔗](https://codeforces.com/problemset/problem/368/B) | `data structures`, `dp` | 2026-05-02 |
-| 7 | [1327A - Sum of Odd Integers](problems/1327A_Sum_of_Odd_Integers.py) | [🔗](https://codeforces.com/problemset/problem/1327/A) | `math` | 2026-05-02 |
+| 5 | [1327A - Sum of Odd Integers](problems/1327A_Sum_of_Odd_Integers.py) | [🔗](https://codeforces.com/problemset/problem/1327/A) | `math` | 2026-05-02 |
+| 6 | [270A - Fancy Fence](problems/270A_Fancy_Fence.py) | [🔗](https://codeforces.com/problemset/problem/270/A) | `geometry`, `implementation`, `math` | 2026-05-02 |
+| 7 | [368B - Sereja and Suffixes](problems/368B_Sereja_and_Suffixes.py) | [🔗](https://codeforces.com/problemset/problem/368/B) | `data structures`, `dp` | 2026-05-02 |
 | 8 | [456A - Laptops](problems/456A_Laptops.py) | [🔗](https://codeforces.com/problemset/problem/456/A) | `sortings` | 2026-04-28 |
 | 9 | [313B - Ilya and Queries](problems/313B_Ilya_and_Queries.py) | [🔗](https://codeforces.com/problemset/problem/313/B) | `dp`, `implementation` | 2026-04-27 |
 | 10 | [363B - Fence](problems/363B_Fence.py) | [🔗](https://codeforces.com/problemset/problem/363/B) | `brute force`, `dp` | 2026-04-27 |
