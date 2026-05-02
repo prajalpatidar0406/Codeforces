@@ -408,7 +408,7 @@ def build_readme(solutions):
 - 📊 **Problem metadata** — rating, tags, and difficulty fetched live from the Codeforces API
 - 🔗 **Clickable links** — click any problem name to view the solution; click 🔗 to open it on Codeforces
 - ❌ **Unsolved tracking** — mark problems as `#unsolved` with a `#reason` to track what needs revisiting
-- 📈 **[Interactive Stats Dashboard](stats.html)** — visual graphs: daily/weekly/monthly progress, rating distribution, topic radar, and activity heatmap
+- 📈 **[Interactive Stats Dashboard](https://prajalpatidar0406.github.io/Codeforces/stats.html)** — visual graphs: daily/weekly/monthly progress, rating distribution, topic radar, and activity heatmap
 
 ---
 
