@@ -6,7 +6,7 @@
 &nbsp;&nbsp;
 [![CF Rating](https://cp-logo.vercel.app/codeforces/prajal_patidar)](https://codeforces.com/profile/prajal_patidar)
 &nbsp;&nbsp;
-![Total](https://img.shields.io/badge/Solved-12-success?style=for-the-badge)
+![Total](https://img.shields.io/badge/Solved-14-success?style=for-the-badge)
 &nbsp;&nbsp;
 ![Unsolved](https://img.shields.io/badge/Unsolved-1-red?style=for-the-badge)
 &nbsp;&nbsp;
@@ -35,9 +35,9 @@
 
 | Metric | Value |
 |--------|-------|
-| ✅ Total Solved | **12** |
+| ✅ Total Solved | **14** |
 | ❌ Unsolved | **1** |
-| 🏷️ Unique Topics | **11** |
+| 🏷️ Unique Topics | **13** |
 | 🟢 Easiest Rating | **1000** |
 | 🔴 Hardest Rating | **1100** |
 
@@ -45,15 +45,15 @@
 
 ```
      0  ██░░░░░░░░░░░░░░░░░░    1  (?)
-  1000  ███████░░░░░░░░░░░░░    3  (Pupil)
-  1100  ████████████████████    8  (Pupil)
+  1000  ██████░░░░░░░░░░░░░░    3  (Pupil)
+  1100  ████████████████████   10  (Pupil)
 ```
 
 ---
 
 ## 🏷️ Topics Covered
 
-![implementation](https://img.shields.io/badge/implementation-6-informational?style=flat-square) ![math](https://img.shields.io/badge/math-4-informational?style=flat-square) ![dp](https://img.shields.io/badge/dp-4-informational?style=flat-square) ![greedy](https://img.shields.io/badge/greedy-3-informational?style=flat-square) ![strings](https://img.shields.io/badge/strings-2-informational?style=flat-square) ![*special](https://img.shields.io/badge/*special-1-informational?style=flat-square) ![geometry](https://img.shields.io/badge/geometry-1-informational?style=flat-square) ![brute force](https://img.shields.io/badge/brute%20force-1-informational?style=flat-square) ![data structures](https://img.shields.io/badge/data%20structures-1-informational?style=flat-square) ![sortings](https://img.shields.io/badge/sortings-1-informational?style=flat-square) ![binary search](https://img.shields.io/badge/binary%20search-1-informational?style=flat-square)
+![implementation](https://img.shields.io/badge/implementation-8-informational?style=flat-square) ![math](https://img.shields.io/badge/math-4-informational?style=flat-square) ![dp](https://img.shields.io/badge/dp-4-informational?style=flat-square) ![greedy](https://img.shields.io/badge/greedy-3-informational?style=flat-square) ![strings](https://img.shields.io/badge/strings-2-informational?style=flat-square) ![brute force](https://img.shields.io/badge/brute%20force-2-informational?style=flat-square) ![data structures](https://img.shields.io/badge/data%20structures-2-informational?style=flat-square) ![sortings](https://img.shields.io/badge/sortings-2-informational?style=flat-square) ![*special](https://img.shields.io/badge/*special-1-informational?style=flat-square) ![geometry](https://img.shields.io/badge/geometry-1-informational?style=flat-square) ![binary search](https://img.shields.io/badge/binary%20search-1-informational?style=flat-square) ![bitmasks](https://img.shields.io/badge/bitmasks-1-informational?style=flat-square) ![constructive algorithms](https://img.shields.io/badge/constructive%20algorithms-1-informational?style=flat-square)
 
 ---
 
@@ -75,18 +75,20 @@
 | 3 | [69A - Young Physicist](problems/69A_Young_Physicist.py) | [🔗](https://codeforces.com/problemset/problem/69/A) | `implementation`, `math` | 2026-04-24 |
 | 4 | [118A - String Task](problems/118A_String_Task.py) | [🔗](https://codeforces.com/problemset/problem/118/A) | `implementation`, `strings` | 2026-04-23 |
 
-### <img src="https://img.shields.io/badge/1100-Pupil-008000?style=flat-square"/> &nbsp; Rating 1100 — 8 solved
+### <img src="https://img.shields.io/badge/1100-Pupil-008000?style=flat-square"/> &nbsp; Rating 1100 — 10 solved
 
 | # | Problem | CF | Tags | Date |
 |---|---------|:--:|------|------|
 | 5 | [1327A - Sum of Odd Integers](problems/1327A_Sum_of_Odd_Integers.py) | [🔗](https://codeforces.com/problemset/problem/1327/A) | `math` | 2026-05-02 |
 | 6 | [270A - Fancy Fence](problems/270A_Fancy_Fence.py) | [🔗](https://codeforces.com/problemset/problem/270/A) | `geometry`, `implementation`, `math` | 2026-05-02 |
 | 7 | [368B - Sereja and Suffixes](problems/368B_Sereja_and_Suffixes.py) | [🔗](https://codeforces.com/problemset/problem/368/B) | `data structures`, `dp` | 2026-05-02 |
-| 8 | [456A - Laptops](problems/456A_Laptops.py) | [🔗](https://codeforces.com/problemset/problem/456/A) | `sortings` | 2026-04-28 |
-| 9 | [313B - Ilya and Queries](problems/313B_Ilya_and_Queries.py) | [🔗](https://codeforces.com/problemset/problem/313/B) | `dp`, `implementation` | 2026-04-27 |
-| 10 | [363B - Fence](problems/363B_Fence.py) | [🔗](https://codeforces.com/problemset/problem/363/B) | `brute force`, `dp` | 2026-04-27 |
-| 11 | [706B - Interesting drink](problems/706B_Interesting_drink.py) | [🔗](https://codeforces.com/problemset/problem/706/B) | `binary search`, `dp`, `implementation` | 2026-04-27 |
-| 12 | [158B - Taxi](problems/158B_Taxi.py) | [🔗](https://codeforces.com/problemset/problem/158/B) | `*special`, `greedy`, `implementation` | 2026-04-26 |
+| 8 | [519B - A and B and Compilation Errors](problems/519B_A_and_B_and_Compilation_Errors.py) | [🔗](https://codeforces.com/problemset/problem/519/B) | `data structures`, `implementation`, `sortings` | 2026-05-02 |
+| 9 | [467B - Fedor and New Game](problems/467B_Fedor_and_New_Game.py) | [🔗](https://codeforces.com/problemset/problem/467/B) | `bitmasks`, `brute force`, `constructive algorithms`, `implementation` | 2026-05-02 |
+| 10 | [456A - Laptops](problems/456A_Laptops.py) | [🔗](https://codeforces.com/problemset/problem/456/A) | `sortings` | 2026-04-28 |
+| 11 | [313B - Ilya and Queries](problems/313B_Ilya_and_Queries.py) | [🔗](https://codeforces.com/problemset/problem/313/B) | `dp`, `implementation` | 2026-04-27 |
+| 12 | [363B - Fence](problems/363B_Fence.py) | [🔗](https://codeforces.com/problemset/problem/363/B) | `brute force`, `dp` | 2026-04-27 |
+| 13 | [706B - Interesting drink](problems/706B_Interesting_drink.py) | [🔗](https://codeforces.com/problemset/problem/706/B) | `binary search`, `dp`, `implementation` | 2026-04-27 |
+| 14 | [158B - Taxi](problems/158B_Taxi.py) | [🔗](https://codeforces.com/problemset/problem/158/B) | `*special`, `greedy`, `implementation` | 2026-04-26 |
 
 ## ❌ Unsolved Problems
 
@@ -144,11 +146,14 @@ Unsolved problems appear in a separate section with the reason displayed.
 ```
 Codeforces/
 ├── problems/              ← all solution files (auto-renamed)
-│   ├── 4A_Watermelon.py
 │   ├── 69A_Young_Physicist.py
+│   ├── 118A_String_Task.py
 │   └── ...
+├── stats_template.html    ← stats dashboard template (Chart.js)
+├── stats.html             ← auto-generated stats dashboard
 ├── template.py            ← starter template for new problems
-├── update_readme.py       ← README generator script
+├── update_readme.py       ← README + stats generator script
+├── .cf_cache.json         ← Codeforces API cache (auto-generated, gitignored)
 ├── .gitignore
 └── README.md              ← this file (auto-generated)
 ```
@@ -156,12 +161,13 @@ Codeforces/
 </details>
 
 <details>
-<summary><b>🔧 Manual README Update</b></summary>
+<summary><b>🔧 Manual README + Stats Update</b></summary>
 
 ```bash
 python3 update_readme.py
 ```
 
+This regenerates both `README.md` and `stats.html` with latest data.
 Problem name, rating, and tags are fetched from the [Codeforces API](https://codeforces.com/apiHelp) and cached for 24 hours.
 
 </details>
