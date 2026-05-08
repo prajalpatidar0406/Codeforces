@@ -13,11 +13,15 @@ for _ in range(t):
             if z != x:
                 divs.append(z)
     ans = 0
+    pref = [0] * (n+1)
+    for i in range(n):
+        pref[i+1] = arr[i] + pref[i]
+    
     for x in divs:
-        maxi = 0
-        mini = 1e63-1
-        for i in range(0, n, x):
-            sumx= sum(arr[i:i+x])
+        maxi = -1
+        mini = float("inf")
+        for i in range(x, n+1, x):
+            sumx= pref[i] - pref[i-x]
             maxi = max(maxi, sumx)
             mini = min(mini, sumx)
         ans = max(ans, maxi-mini)
