@@ -8,7 +8,7 @@
 &nbsp;&nbsp;
 ![Total](https://img.shields.io/badge/Solved-29-success?style=for-the-badge)
 &nbsp;&nbsp;
-![Unsolved](https://img.shields.io/badge/Unsolved-2-red?style=for-the-badge)
+![Unsolved](https://img.shields.io/badge/Unsolved-3-red?style=for-the-badge)
 &nbsp;&nbsp;
 ![Python](https://img.shields.io/badge/Language-Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 
@@ -36,7 +36,7 @@
 | Metric | Value |
 |--------|-------|
 | ✅ Total Solved | **29** |
-| ❌ Unsolved | **2** |
+| ❌ Unsolved | **3** |
 | 🏷️ Unique Topics | **17** |
 | 🟢 Easiest Rating | **1000** |
 | 🔴 Hardest Rating | **1100** |
@@ -109,8 +109,9 @@
 
 | # | Problem | CF | Reason | Tags | Date |
 |---|---------|:--:|--------|------|------|
-| 1 | [1917B - Erase First or Second Letter](problems/1917B_Erase_First_or_Second_Letter.py) | [🔗](https://codeforces.com/problemset/problem/1917/B) | due to time limit exceed on TEST 3 | `brute force`, `combinatorics`, `data structures`, `dp`, `strings` | 2026-05-04 |
-| 2 | [1873E - Building an Aquarium](problems/1873E_Building_an_Aquarium.py) | [🔗](https://codeforces.com/problemset/problem/1873/E) | due to memory limit | `binary search`, `sortings` | 2026-04-25 |
+| 1 | [1511C - Yet Another Card Deck](problems/1511C_Yet_Another_Card_Deck.py) | [🔗](https://codeforces.com/problemset/problem/1511/C) | due to time limit exceed | `brute force`, `data structures`, `implementation`, `trees` | 2026-05-09 |
+| 2 | [1917B - Erase First or Second Letter](problems/1917B_Erase_First_or_Second_Letter.py) | [🔗](https://codeforces.com/problemset/problem/1917/B) | due to time limit exceed on TEST 3 | `brute force`, `combinatorics`, `data structures`, `dp`, `strings` | 2026-05-04 |
+| 3 | [1873E - Building an Aquarium](problems/1873E_Building_an_Aquarium.py) | [🔗](https://codeforces.com/problemset/problem/1873/E) | due to memory limit | `binary search`, `sortings` | 2026-04-25 |
 
 
 ---
