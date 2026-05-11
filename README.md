@@ -8,7 +8,7 @@
 &nbsp;&nbsp;
 ![Total](https://img.shields.io/badge/Solved-36-success?style=for-the-badge)
 &nbsp;&nbsp;
-![Unsolved](https://img.shields.io/badge/Unsolved-4-red?style=for-the-badge)
+![Unsolved](https://img.shields.io/badge/Unsolved-5-red?style=for-the-badge)
 &nbsp;&nbsp;
 ![Python](https://img.shields.io/badge/Language-Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 
@@ -36,7 +36,7 @@
 | Metric | Value |
 |--------|-------|
 | ✅ Total Solved | **36** |
-| ❌ Unsolved | **4** |
+| ❌ Unsolved | **5** |
 | 🏷️ Unique Topics | **18** |
 | 🟢 Easiest Rating | **800** |
 | 🔴 Hardest Rating | **1100** |
@@ -122,10 +122,11 @@
 
 | # | Problem | CF | Reason | Tags | Date |
 |---|---------|:--:|--------|------|------|
-| 1 | [919B - Perfect Number](problems/919B_Perfect_Number.py) | [🔗](https://codeforces.com/problemset/problem/919/B) | due to TLE | `binary search`, `brute force`, `dp`, `implementation`, `number theory` | 2026-05-10 |
-| 2 | [1511C - Yet Another Card Deck](problems/1511C_Yet_Another_Card_Deck.py) | [🔗](https://codeforces.com/problemset/problem/1511/C) | due to time limit exceed | `brute force`, `data structures`, `implementation`, `trees` | 2026-05-09 |
-| 3 | [1917B - Erase First or Second Letter](problems/1917B_Erase_First_or_Second_Letter.py) | [🔗](https://codeforces.com/problemset/problem/1917/B) | due to time limit exceed on TEST 3 | `brute force`, `combinatorics`, `data structures`, `dp`, `strings` | 2026-05-04 |
-| 4 | [1873E - Building an Aquarium](problems/1873E_Building_an_Aquarium.py) | [🔗](https://codeforces.com/problemset/problem/1873/E) | due to memory limit | `binary search`, `sortings` | 2026-04-25 |
+| 1 | [1516B - AGAGA XOOORRR](problems/1516B_AGAGA_XOOORRR.py) | [🔗](https://codeforces.com/problemset/problem/1516/B) | Wrong answer on Test 4 | `bitmasks`, `brute force`, `dp`, `greedy` | 2026-05-11 |
+| 2 | [919B - Perfect Number](problems/919B_Perfect_Number.py) | [🔗](https://codeforces.com/problemset/problem/919/B) | due to TLE | `binary search`, `brute force`, `dp`, `implementation`, `number theory` | 2026-05-10 |
+| 3 | [1511C - Yet Another Card Deck](problems/1511C_Yet_Another_Card_Deck.py) | [🔗](https://codeforces.com/problemset/problem/1511/C) | due to time limit exceed | `brute force`, `data structures`, `implementation`, `trees` | 2026-05-09 |
+| 4 | [1917B - Erase First or Second Letter](problems/1917B_Erase_First_or_Second_Letter.py) | [🔗](https://codeforces.com/problemset/problem/1917/B) | due to time limit exceed on TEST 3 | `brute force`, `combinatorics`, `data structures`, `dp`, `strings` | 2026-05-04 |
+| 5 | [1873E - Building an Aquarium](problems/1873E_Building_an_Aquarium.py) | [🔗](https://codeforces.com/problemset/problem/1873/E) | due to memory limit | `binary search`, `sortings` | 2026-04-25 |
 
 
 ---
