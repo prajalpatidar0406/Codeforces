@@ -26,11 +26,20 @@ Add these comment lines right after the problem link:
    #unsolved
    #reason: "due to memory limit"
 
+MARKING A PROBLEM FOR RECHECK
+-----------------------------
+For solved problems you want to revisit (e.g. copied from tutorial):
+
+   # https://codeforces.com/problemset/problem/4/A
+   #recheck
+   #recheck_reason: "copied from tutorial"
+
 The script will:
 - Fetch problem name, rating, and tags from the Codeforces API.
 - Auto-rename your file to {contestId}{index}_{Problem_Title}.py
 - Update README.md with clickable links to each solution file.
 - Show unsolved problems in a separate section with the reason.
+- Show recheck problems in a separate section with the recheck reason.
 """
 
 import os
@@ -101,8 +110,10 @@ def parse_link_from_file(filepath):
     - Codeforces problem link (line 1)
     - unsolved flag (line 2, optional): #unsolved
     - reason (line 3, optional): #reason: "due to memory limit"
+    - recheck flag (optional): #recheck
+    - recheck_reason (optional): #recheck_reason: "copied from tutorial"
 
-    Returns (link, contest_id, index, unsolved, reason).
+    Returns (link, contest_id, index, unsolved, reason, recheck, recheck_reason).
     """
     with open(filepath, "r") as f:
         lines = [f.readline().strip() for _ in range(5)]
@@ -110,7 +121,7 @@ def parse_link_from_file(filepath):
     # Line 1: problem link
     match = re.match(r"^#\s*(https?://codeforces\.com/\S+)", lines[0])
     if not match:
-        return None, None, None, False, None
+        return None, None, None, False, None, False, None
 
     link = match.group(1)
 
@@ -121,22 +132,29 @@ def parse_link_from_file(filepath):
     #   /gym/123/problem/A
     m = re.search(r"/(?:problemset/problem|contest|gym)/(\d+)/(?:problem/)?([A-Za-z]\d?)", link)
     if not m:
-        return link, None, None, False, None
+        return link, None, None, False, None, False, None
 
     contest_id = m.group(1)
     index = m.group(2).upper()
 
-    # Scan remaining lines for #unsolved and #reason tags
+    # Scan remaining lines for #unsolved, #reason, #recheck, #recheck_reason tags
     unsolved = False
     reason = None
+    recheck = False
+    recheck_reason = None
     for line in lines[1:]:
         if re.match(r"^#\s*unsolved\s*$", line, re.IGNORECASE):
             unsolved = True
         reason_match = re.match(r'^#\s*reason:\s*["\'](.+?)["\']\s*$', line, re.IGNORECASE)
         if reason_match:
             reason = reason_match.group(1)
+        if re.match(r"^#\s*recheck\s*$", line, re.IGNORECASE):
+            recheck = True
+        recheck_reason_match = re.match(r'^#\s*recheck_reason:\s*["\'](.+?)["\']\s*$', line, re.IGNORECASE)
+        if recheck_reason_match:
+            recheck_reason = recheck_reason_match.group(1)
 
-    return link, contest_id, index, unsolved, reason
+    return link, contest_id, index, unsolved, reason, recheck, recheck_reason
 
 
 def get_file_date(filepath):
@@ -211,7 +229,7 @@ def scan_solutions(problems_db):
             continue
 
         filepath = os.path.join(PROBLEMS_DIR, fname)
-        link, contest_id, index, unsolved, reason = parse_link_from_file(filepath)
+        link, contest_id, index, unsolved, reason, recheck, recheck_reason = parse_link_from_file(filepath)
 
         if not link:
             continue
@@ -243,6 +261,8 @@ def scan_solutions(problems_db):
             "date": get_file_date(filepath),
             "unsolved": unsolved,
             "reason": reason,
+            "recheck": recheck,
+            "recheck_reason": recheck_reason,
         })
 
     return solutions
@@ -251,15 +271,16 @@ def scan_solutions(problems_db):
 def build_readme(solutions):
     """Rebuild README.md."""
 
-    # ── Split solved / unsolved ──
-    solved = [s for s in solutions if not s["unsolved"]]
+    # ── Split solved / unsolved / recheck ──
+    solved = [s for s in solutions if not s["unsolved"] and not s["recheck"]]
     unsolved = [s for s in solutions if s["unsolved"]]
+    recheck = [s for s in solutions if s["recheck"] and not s["unsolved"]]
 
-    # ── Collect stats (from solved only) ──
+    # ── Collect stats (from solved + recheck) ──
     topic_counts = defaultdict(int)
     rating_groups = defaultdict(list)
 
-    for s in solved:
+    for s in solved + recheck:
         for tag in s["tags"]:
             topic_counts[tag] += 1
         # Group by rating bucket
@@ -307,6 +328,7 @@ def build_readme(solutions):
     # ── Stats overview ──
     total_solved = len(solved)
     total_unsolved = len(unsolved)
+    total_recheck = len(recheck)
     total_all = len(solutions)
     unique_tags = len(topic_counts)
     easiest = min((int(s["rating"]) for s in solved if str(s["rating"]).isdigit()), default="-")
@@ -354,6 +376,23 @@ def build_readme(solutions):
     if not rating_sections:
         rating_sections.append("*No solutions yet — start solving!*\n")
 
+    # ── Build recheck section ──
+    recheck_section = ""
+    if recheck:
+        recheck.sort(key=lambda s: s["date"], reverse=True)
+        recheck_section = "## 🔄 Recheck Solutions\n\n"
+        recheck_section += "> These problems are solved but need to be revisited and re-solved independently.\n\n"
+        recheck_section += "| # | Problem | CF | Reason | Tags | Date |\n"
+        recheck_section += "|---|---------|:--:|--------|------|------|\n"
+        for idx, s in enumerate(recheck, 1):
+            prob_id = f'{s["contest_id"]}{s["index"]}'
+            display = f"{prob_id} - {s['name']}"
+            cf_link = f'[🔗]({s["link"]})'
+            reason_str = s["recheck_reason"] if s["recheck_reason"] else "-"
+            tags_str = ", ".join(f"`{t}`" for t in s["tags"]) if s["tags"] else "-"
+            recheck_section += f"| {idx} | [{display}]({s['filepath']}) | {cf_link} | {reason_str} | {tags_str} | {s['date']} |\n"
+        recheck_section += "\n"
+
     # ── Build unsolved section ──
     unsolved_section = ""
     if unsolved:
@@ -389,6 +428,8 @@ def build_readme(solutions):
 &nbsp;&nbsp;
 ![Total](https://img.shields.io/badge/Solved-{total_solved}-success?style=for-the-badge)
 &nbsp;&nbsp;
+![Recheck](https://img.shields.io/badge/Recheck-{total_recheck}-orange?style=for-the-badge)
+&nbsp;&nbsp;
 ![Unsolved](https://img.shields.io/badge/Unsolved-{total_unsolved}-red?style=for-the-badge)
 &nbsp;&nbsp;
 ![Python](https://img.shields.io/badge/Language-Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
@@ -407,6 +448,7 @@ def build_readme(solutions):
 - 📛 **Auto file naming** — solution files are renamed to `{{contestId}}{{index}}_{{Title}}.py` automatically
 - 📊 **Problem metadata** — rating, tags, and difficulty fetched live from the Codeforces API
 - 🔗 **Clickable links** — click any problem name to view the solution; click 🔗 to open it on Codeforces
+- 🔄 **Recheck tracking** — mark solutions as `#recheck` with a `#recheck_reason` for problems to revisit and re-solve
 - ❌ **Unsolved tracking** — mark problems as `#unsolved` with a `#reason` to track what needs revisiting
 - 📈 **[Interactive Stats Dashboard](https://prajalpatidar0406.github.io/Codeforces/stats.html)** — visual graphs: daily/weekly/monthly progress, rating distribution, topic radar, and activity heatmap
 
@@ -417,6 +459,7 @@ def build_readme(solutions):
 | Metric | Value |
 |--------|-------|
 | ✅ Total Solved | **{total_solved}** |
+| 🔄 Recheck | **{total_recheck}** |
 | ❌ Unsolved | **{total_unsolved}** |
 | 🏷️ Unique Topics | **{unique_tags}** |
 | 🟢 Easiest Rating | **{easiest}** |
@@ -441,6 +484,7 @@ def build_readme(solutions):
 > Click on any **Problem** name to view the solution code. Click **🔗** to open the problem on Codeforces.
 
 {chr(10).join(rating_sections)}
+{recheck_section}
 {unsolved_section}
 ---
 
@@ -482,6 +526,23 @@ Add `#unsolved` and optionally `#reason` after the problem link:
 ```
 
 Unsolved problems appear in a separate section with the reason displayed.
+
+</details>
+
+<details>
+<summary><b>🔄 Marking a Problem for Recheck</b></summary>
+
+For solved problems you want to revisit (e.g. copied from a tutorial), add `#recheck` and optionally `#recheck_reason`:
+
+```python
+# https://codeforces.com/problemset/problem/1827/A
+#recheck
+#recheck_reason: "copied from tutorial"
+
+# your solution below...
+```
+
+Recheck problems appear in a separate section so you remember to re-solve them independently.
 
 </details>
 
@@ -536,8 +597,9 @@ def build_stats_page(solutions):
         print("   ⚠️  stats_template.html not found, skipping stats page.")
         return
 
-    solved = [s for s in solutions if not s["unsolved"]]
+    solved = [s for s in solutions if not s["unsolved"] and not s["recheck"]]
     unsolved = [s for s in solutions if s["unsolved"]]
+    recheck = [s for s in solutions if s["recheck"] and not s["unsolved"]]
 
     stats_data = {
         "solved": [
@@ -561,6 +623,18 @@ def build_stats_page(solutions):
             }
             for s in unsolved
         ],
+        "recheck": [
+            {
+                "name": s["name"],
+                "rating": s["rating"],
+                "tags": s["tags"],
+                "date": s["date"],
+                "contest_id": s["contest_id"],
+                "index": s["index"],
+                "recheck_reason": s["recheck_reason"],
+            }
+            for s in recheck
+        ],
     }
 
     data_script = (
@@ -577,7 +651,7 @@ def build_stats_page(solutions):
     with open(output_path, "w") as f:
         f.write(html)
 
-    print(f"   ✅ stats.html updated with {len(solved)} solved, {len(unsolved)} unsolved.")
+    print(f"   ✅ stats.html updated with {len(solved)} solved, {len(recheck)} recheck, {len(unsolved)} unsolved.")
 
 
 def main():
@@ -587,9 +661,10 @@ def main():
 
     print("📂 Scanning solution files...")
     solutions = scan_solutions(problems_db)
-    solved = [s for s in solutions if not s["unsolved"]]
+    solved = [s for s in solutions if not s["unsolved"] and not s["recheck"]]
     unsolved = [s for s in solutions if s["unsolved"]]
-    print(f"   Found {len(solved)} solved, {len(unsolved)} unsolved.\n")
+    recheck = [s for s in solutions if s["recheck"] and not s["unsolved"]]
+    print(f"   Found {len(solved)} solved, {len(recheck)} recheck, {len(unsolved)} unsolved.\n")
 
     print("📝 Updating README.md...")
     build_readme(solutions)
@@ -597,7 +672,7 @@ def main():
     print("📊 Generating stats dashboard...")
     build_stats_page(solutions)
 
-    print(f"\n✅ Done! README.md + stats.html updated with {len(solved)} solved, {len(unsolved)} unsolved.")
+    print(f"\n✅ Done! README.md + stats.html updated with {len(solved)} solved, {len(recheck)} recheck, {len(unsolved)} unsolved.")
 
     if solutions:
         print(f"\n📊 Summary:")

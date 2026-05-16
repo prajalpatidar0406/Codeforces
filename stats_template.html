@@ -97,27 +97,33 @@ footer{text-align:center;padding:32px 0;color:var(--text2);font-size:.8rem}
 
 <script>
 /* ── globals ── */
-const DATA = window.STATS_DATA || {solved:[],unsolved:[]};
+const DATA = window.STATS_DATA || {solved:[],unsolved:[],recheck:[]};
 const solved = DATA.solved;
+const recheckProblems = DATA.recheck || [];
+const allSolved = [...solved, ...recheckProblems];
 
 /* ── KPIs ── */
 (function(){
-  const ratings = solved.map(s=>parseInt(s.rating)).filter(r=>!isNaN(r));
-  const dates = solved.map(s=>s.date);
+  const ratings = allSolved.map(s=>parseInt(s.rating)).filter(r=>!isNaN(r));
+  const dates = allSolved.map(s=>s.date);
   const uniqueDays = [...new Set(dates)].length;
   const firstDate = dates.length ? new Date(Math.min(...dates.map(d=>new Date(d)))) : new Date();
   const daysSinceStart = Math.max(1, Math.ceil((new Date()-firstDate)/864e5));
 
   const items = [
     {v:solved.length, l:'Solved'},
+    {v:recheckProblems.length, l:'Recheck', c:'#ff8c00'},
     {v:DATA.unsolved.length, l:'Unsolved'},
     {v:ratings.length?Math.min(...ratings):'-', l:'Easiest'},
     {v:ratings.length?Math.max(...ratings):'-', l:'Hardest'},
     {v:uniqueDays, l:'Active Days'},
-    {v:(solved.length/Math.max(1,(daysSinceStart/7))).toFixed(1), l:'Per Week'},
+    {v:(allSolved.length/Math.max(1,(daysSinceStart/7))).toFixed(1), l:'Per Week'},
   ];
   const el=document.getElementById('kpis');
-  items.forEach(i=>{el.innerHTML+=`<div class="kpi"><div class="value">${i.v}</div><div class="label">${i.l}</div></div>`});
+  items.forEach(i=>{
+    const colorStyle = i.c ? `background:linear-gradient(135deg,${i.c},${i.c})` : '';
+    el.innerHTML+=`<div class="kpi"><div class="value" ${colorStyle?`style="-webkit-background-clip:text;-webkit-text-fill-color:transparent;${colorStyle}"`:''}">${i.v}</div><div class="label">${i.l}</div></div>`;
+  });
 })();
 
 /* ── helpers ── */
@@ -129,7 +135,7 @@ Chart.defaults.font.family='Inter';
 /* ── 1. Cumulative Progress ── */
 (function(){
   const byDate={};
-  solved.forEach(s=>{byDate[s.date]=(byDate[s.date]||0)+1});
+  allSolved.forEach(s=>{byDate[s.date]=(byDate[s.date]||0)+1});
   const sortedDates=Object.keys(byDate).sort();
   let cum=0;
   const cumData=sortedDates.map(d=>{cum+=byDate[d];return{x:d,y:cum}});
@@ -147,7 +153,7 @@ Chart.defaults.font.family='Inter';
 /* ── 2. Daily Chart ── */
 (function(){
   const byDate={};
-  solved.forEach(s=>{byDate[s.date]=(byDate[s.date]||0)+1});
+  allSolved.forEach(s=>{byDate[s.date]=(byDate[s.date]||0)+1});
   const sortedDates=Object.keys(byDate).sort();
   const counts=sortedDates.map(d=>byDate[d]);
 
@@ -163,7 +169,7 @@ Chart.defaults.font.family='Inter';
 /* ── 3. Weekly/Monthly ── */
 (function(){
   const weekMap={},monthMap={};
-  solved.forEach(s=>{
+  allSolved.forEach(s=>{
     const d=new Date(s.date);
     const wk=s.date.slice(0,4)+'-W'+String(Math.ceil(((d-new Date(d.getFullYear(),0,1))/864e5+1)/7)).padStart(2,'0');
     const mo=s.date.slice(0,7);
@@ -187,7 +193,7 @@ Chart.defaults.font.family='Inter';
 /* ── 4. Rating Donut ── */
 (function(){
   const buckets={};
-  solved.forEach(s=>{
+  allSolved.forEach(s=>{
     const r=parseInt(s.rating);
     const b=isNaN(r)?'Unrated':String((Math.floor(r/100))*100);
     buckets[b]=(buckets[b]||0)+1;
@@ -207,7 +213,7 @@ Chart.defaults.font.family='Inter';
 /* ── 5. Topic Radar ── */
 (function(){
   const tags={};
-  solved.forEach(s=>(s.tags||[]).forEach(t=>{tags[t]=(tags[t]||0)+1}));
+  allSolved.forEach(s=>(s.tags||[]).forEach(t=>{tags[t]=(tags[t]||0)+1}));
   const sorted=Object.entries(tags).sort((a,b)=>b[1]-a[1]).slice(0,10);
   const labels=sorted.map(e=>e[0]);
   const data=sorted.map(e=>e[1]);
@@ -224,7 +230,7 @@ Chart.defaults.font.family='Inter';
 /* ── 6. Activity Heatmap ── */
 (function(){
   const byDate={};
-  solved.forEach(s=>{byDate[s.date]=(byDate[s.date]||0)+1});
+  allSolved.forEach(s=>{byDate[s.date]=(byDate[s.date]||0)+1});
   const grid=document.getElementById('heatmap');
   const tip=document.getElementById('tip');
   const today=new Date();

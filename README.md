@@ -6,7 +6,9 @@
 &nbsp;&nbsp;
 [![CF Rating](https://cp-logo.vercel.app/codeforces/prajal_patidar)](https://codeforces.com/profile/prajal_patidar)
 &nbsp;&nbsp;
-![Total](https://img.shields.io/badge/Solved-38-success?style=for-the-badge)
+![Total](https://img.shields.io/badge/Solved-37-success?style=for-the-badge)
+&nbsp;&nbsp;
+![Recheck](https://img.shields.io/badge/Recheck-1-orange?style=for-the-badge)
 &nbsp;&nbsp;
 ![Unsolved](https://img.shields.io/badge/Unsolved-7-red?style=for-the-badge)
 &nbsp;&nbsp;
@@ -26,6 +28,7 @@
 - 📛 **Auto file naming** — solution files are renamed to `{contestId}{index}_{Title}.py` automatically
 - 📊 **Problem metadata** — rating, tags, and difficulty fetched live from the Codeforces API
 - 🔗 **Clickable links** — click any problem name to view the solution; click 🔗 to open it on Codeforces
+- 🔄 **Recheck tracking** — mark solutions as `#recheck` with a `#recheck_reason` for problems to revisit and re-solve
 - ❌ **Unsolved tracking** — mark problems as `#unsolved` with a `#reason` to track what needs revisiting
 - 📈 **[Interactive Stats Dashboard](https://prajalpatidar0406.github.io/Codeforces/stats.html)** — visual graphs: daily/weekly/monthly progress, rating distribution, topic radar, and activity heatmap
 
@@ -35,7 +38,8 @@
 
 | Metric | Value |
 |--------|-------|
-| ✅ Total Solved | **38** |
+| ✅ Total Solved | **37** |
+| 🔄 Recheck | **1** |
 | ❌ Unsolved | **7** |
 | 🏷️ Unique Topics | **19** |
 | 🟢 Easiest Rating | **800** |
@@ -120,6 +124,15 @@
 | 37 | [706B - Interesting drink](problems/706B_Interesting_drink.py) | [🔗](https://codeforces.com/problemset/problem/706/B) | `binary search`, `dp`, `implementation` | 2026-04-27 |
 | 38 | [158B - Taxi](problems/158B_Taxi.py) | [🔗](https://codeforces.com/problemset/problem/158/B) | `*special`, `greedy`, `implementation` | 2026-04-26 |
 
+## 🔄 Recheck Solutions
+
+> These problems are solved but need to be revisited and re-solved independently.
+
+| # | Problem | CF | Reason | Tags | Date |
+|---|---------|:--:|--------|------|------|
+| 1 | [1827A - Counting Orders](problems/1827A_Counting_Orders.py) | [🔗](https://codeforces.com/problemset/problem/1827/A) | copied from tutorial | `combinatorics`, `math`, `sortings`, `two pointers` | 2026-05-16 |
+
+
 ## ❌ Unsolved Problems
 
 | # | Problem | CF | Reason | Tags | Date |
@@ -173,6 +186,23 @@ Add `#unsolved` and optionally `#reason` after the problem link:
 ```
 
 Unsolved problems appear in a separate section with the reason displayed.
+
+</details>
+
+<details>
+<summary><b>🔄 Marking a Problem for Recheck</b></summary>
+
+For solved problems you want to revisit (e.g. copied from a tutorial), add `#recheck` and optionally `#recheck_reason`:
+
+```python
+# https://codeforces.com/problemset/problem/1827/A
+#recheck
+#recheck_reason: "copied from tutorial"
+
+# your solution below...
+```
+
+Recheck problems appear in a separate section so you remember to re-solve them independently.
 
 </details>
 

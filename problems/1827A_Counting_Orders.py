@@ -1,4 +1,6 @@
 #https://codeforces.com/problemset/problem/1827/A
+#recheck
+#recheck_reason: "copied from tutorial"
 
 from bisect import bisect_right
 t = int(input())
