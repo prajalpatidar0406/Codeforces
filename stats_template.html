@@ -121,8 +121,10 @@ const allSolved = [...solved, ...recheckProblems];
   ];
   const el=document.getElementById('kpis');
   items.forEach(i=>{
-    const colorStyle = i.c ? `background:linear-gradient(135deg,${i.c},${i.c})` : '';
-    el.innerHTML+=`<div class="kpi"><div class="value" ${colorStyle?`style="-webkit-background-clip:text;-webkit-text-fill-color:transparent;${colorStyle}"`:''}">${i.v}</div><div class="label">${i.l}</div></div>`;
+    const valStyle = i.c
+      ? `style="background:linear-gradient(135deg,${i.c},${i.c});-webkit-background-clip:text;-webkit-text-fill-color:transparent"`
+      : '';
+    el.innerHTML+=`<div class="kpi"><div class="value" ${valStyle}>${i.v}</div><div class="label">${i.l}</div></div>`;
   });
 })();
 
